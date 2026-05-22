@@ -1,0 +1,11 @@
+require("config.options")
+require("config.keybinds")
+require("config.lazy")
+require("config.autocmds")
+require("config.snippets")
+
+require("plugins.lsp")
+require("plugins.treesitter")
+require("plugins.nvim-autopairs")
+-- require("nvim-treesitter")
+vim.lsp.enable("rust_analyzer")
