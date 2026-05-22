@@ -1,3 +1,4 @@
+-- Keybinds config for simple neovim navigation
 -- set leader key
 vim.g.mapleader = " "
 -- netrw window
