@@ -23,7 +23,3 @@ vim.keymap.set("n", "<C-h>", "ggVG", {
 vim.keymap.set("n", "<Leader>x", "<cmd>!chmod +x %<CR>", { silent = true })
 -- make file unexecutable
 vim.keymap.set("n", "<Leader>ux", "<cmd>!chmod -x %<CR>", { silent = true })
--- source file
-vim.keymap.set("n", "<leader><leader>", function()
-	vim.cmd("so")
-end)
