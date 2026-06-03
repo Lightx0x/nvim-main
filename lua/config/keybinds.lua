@@ -3,6 +3,8 @@
 vim.g.mapleader = " "
 -- netrw window
 vim.keymap.set("n", "<leader>cd", vim.cmd.Ex)
+-- don't paste over my paste
+vim.keymap.set("x", "p", '"_dP')
 -- make paragraph below line with Enter
 vim.keymap.set("n", "<CR>", "m`o<Esc>``", { noremap = true, silent = true })
 -- make paragraph above line with Alt+Enter
