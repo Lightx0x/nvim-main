@@ -12,8 +12,8 @@ return {
 		-- Formatters & linters for mason to install
 		require("mason-null-ls").setup({
 			ensure_installed = {
-				-- 'prettier', -- ts/js formatter
-				-- 'eslint_d', -- ts/js linter
+				"prettier", -- ts/js formatter
+				"eslint_d", -- ts/js linter
 				"shfmt", -- Shell formatter
 				"checkmake", -- linter for Makefiles
 				"stylua", -- lua formatter; Already installed via Mason
@@ -24,12 +24,9 @@ return {
 
 		local sources = {
 			diagnostics.checkmake,
-			formatting.prettier.with({ filetypes = { "html", "json", "yaml", "markdown" } }),
+			formatting.prettier,
 			formatting.stylua,
 			formatting.shfmt.with({ args = { "-i", "4" } }),
-			formatting.terraform_fmt,
-			require("none-ls.formatting.ruff").with({ extra_args = { "--extend-select", "I" } }),
-			require("none-ls.formatting.ruff_format"),
 		}
 
 		local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
