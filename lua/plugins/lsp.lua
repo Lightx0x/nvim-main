@@ -31,8 +31,13 @@ return {
 			vim.lsp.enable({ "ts_ls", "lua_ls", "rust_analyzer" })
 
 			vim.diagnostic.config({
-				-- virtual_lines = true,
-				virtual_text = true,
+				virtual_text = {
+					prefix = "●",
+					format = function(diagnostic)
+						local code = diagnostic.code and string.format("[%s]", diagnostic.code) or ""
+						return string.format("%s %s", code, diagnostic.message)
+					end,
+				},
 				underline = true,
 				update_in_insert = false,
 				severity_sort = true,

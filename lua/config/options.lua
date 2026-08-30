@@ -15,4 +15,12 @@ vim.opt.wrap = false
 vim.opt.signcolumn = "yes"
 -- sweet sweet relative line numbers
 vim.opt.relativenumber = true
-vim.env.PATH = vim.fn.expand("~/.nvm/versions/node/v26.7.0/bin") .. ":" .. vim.env.PATH
+-- Prevent LSP from overwriting treesitter color settings
+vim.hl.priorities.semantic_tokens = 95
+
+-- Add nvm node to PATH (picks the latest installed version)
+local nvm_node_bins = vim.fn.glob(vim.fn.expand("~/.nvm/versions/node/v*/bin"), false, true)
+if #nvm_node_bins > 0 then
+	table.sort(nvm_node_bins)
+	vim.env.PATH = nvm_node_bins[#nvm_node_bins] .. ":" .. vim.env.PATH
+end
