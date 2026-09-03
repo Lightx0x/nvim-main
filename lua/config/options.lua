@@ -18,6 +18,14 @@ vim.opt.relativenumber = true
 -- Prevent LSP from overwriting treesitter color settings
 vim.hl.priorities.semantic_tokens = 95
 
+-- Treesitter-based folding
+vim.opt.foldenable = true
+vim.opt.foldmethod = "expr"
+vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+vim.opt.foldtext = ""
+vim.opt.foldlevel = 99
+vim.opt.foldlevelstart = 99
+
 -- Add nvm node to PATH (picks the latest installed version)
 local nvm_node_bins = vim.fn.glob(vim.fn.expand("~/.nvm/versions/node/v*/bin"), false, true)
 if #nvm_node_bins > 0 then
