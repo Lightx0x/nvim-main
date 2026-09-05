@@ -36,6 +36,18 @@ lightx0x · gruvbox-material dark · Sept 5, 2026
 | `Ctrl p` | Previous file |
 | `Ctrl n` | Next file |
 
+### Folding *(new)*
+
+| Key | Action |
+|-----|--------|
+| `za` | Toggle fold under cursor |
+| `zm` | Close all folds one level |
+| `zM` | Close all folds |
+| `zr` | Open all folds one level |
+| `zR` | Open all folds |
+| `zo` | Open fold under cursor |
+| `zc` | Close fold under cursor |
+
 ### Editing
 
 | Key | Action |
