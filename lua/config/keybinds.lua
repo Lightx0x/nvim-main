@@ -25,3 +25,12 @@ vim.keymap.set("n", "<C-h>", "ggVG", {
 vim.keymap.set("n", "<Leader>x", "<cmd>!chmod +x %<CR>", { silent = true })
 -- make file unexecutable
 vim.keymap.set("n", "<Leader>ux", "<cmd>!chmod -x %<CR>", { silent = true })
+-- LSP
+vim.keymap.set("n", "gd", vim.lsp.buf.definition)
+vim.keymap.set("n", "gD", vim.lsp.buf.declaration)
+vim.keymap.set("n", "gr", function()
+	require("telescope.builtin").lsp_references({ include_current_line = true })
+end)
+vim.keymap.set("n", "K", vim.lsp.buf.hover)
+vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename)
+vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action)
