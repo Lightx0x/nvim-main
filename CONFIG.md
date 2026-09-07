@@ -48,6 +48,13 @@ lightx0x · gruvbox-material dark · Sept 5, 2026
 | `zo` | Open fold under cursor |
 | `zc` | Close fold under cursor |
 
+### Todo Comments *(new)*
+
+| Key | Action |
+|-----|--------|
+| `]t` | Next todo comment |
+| `[t` | Previous todo comment |
+
 ### Editing
 
 | Key | Action |
