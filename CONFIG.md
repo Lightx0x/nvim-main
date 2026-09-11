@@ -55,6 +55,13 @@ lightx0x · gruvbox-material dark · Sept 5, 2026
 | `]t` | Next todo comment |
 | `[t` | Previous todo comment |
 
+### Yazi *(new)*
+
+| Key | Action |
+|-----|--------|
+| `⎵ yz` | Open yazi at current file |
+| `⎵ yw` | Open yazi in working directory |
+
 ### Editing
 
 | Key | Action |
@@ -106,6 +113,7 @@ gruvbox-material dark hard with custom highlight overrides
 | lazygit | Git UI |
 | gitsigns *(new)* | Git change markers in gutter |
 | todo-comments *(new)* | Highlight TODO/FIXME/HACK comments |
+| yazi *(new)* | Terminal file manager |
 
 ## Automatic Behaviors
 
