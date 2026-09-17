@@ -1,6 +1,7 @@
 -- Keybinds config for simple neovim navigation
 -- set leader key
 vim.g.mapleader = " "
+vim.g.maplocalleader = " "
 -- netrw window
 vim.keymap.set("n", "<leader>cd", vim.cmd.Ex)
 -- don't paste over my paste

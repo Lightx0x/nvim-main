@@ -62,6 +62,13 @@ lightx0x · gruvbox-material dark · Sept 5, 2026
 | `⎵ yz` | Open yazi at current file |
 | `⎵ yw` | Open yazi in working directory |
 
+### Search & Replace *(new)*
+
+| Key | Action |
+|-----|--------|
+| `⎵ sr` | Open search and replace |
+| `⎵ sw` | Search and replace current word |
+
 ### Editing
 
 | Key | Action |
@@ -114,6 +121,7 @@ gruvbox-material dark hard with custom highlight overrides
 | gitsigns *(new)* | Git change markers in gutter |
 | todo-comments *(new)* | Highlight TODO/FIXME/HACK comments |
 | yazi *(new)* | Terminal file manager |
+| grug-far *(new)* | Repo-wide search and replace |
 
 ## Automatic Behaviors
 
