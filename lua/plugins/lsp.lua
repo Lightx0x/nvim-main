@@ -28,6 +28,16 @@ return {
 			},
 		},
 		config = function()
+			vim.lsp.config("rust_analyzer", {
+				handlers = {
+					["window/showMessage"] = function(_, result, ctx)
+						if result and result.message and result.message:match("panicked") then
+							return
+						end
+						vim.lsp.handlers["window/showMessage"](_, result, ctx)
+					end,
+				},
+			})
 			vim.lsp.enable({ "ts_ls", "lua_ls", "rust_analyzer" })
 
 			vim.diagnostic.config({
