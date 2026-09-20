@@ -1,19 +1,31 @@
 # Neovim Config
 
-lightx0x · gruvbox-material dark · Sept 5, 2026
+lightx0x · gruvbox-material dark · Sept 20, 2026
 
 ## Keybinds
 
-### LSP *(new)*
+`⎵` is the leader key (space). Leader and localleader are both space.
+
+### LSP
+
+Neovim 0.11+ ships its own `gr*` LSP mappings. Those are used directly rather
+than duplicated under the leader key, except where a nicer UI is worth it —
+`grr` is overridden to use Telescope.
 
 | Key | Action |
 |-----|--------|
 | `gd` | Go to definition (cross-file) |
 | `gD` | Go to declaration |
-| `gr` | Find all references (Telescope, includes current line) |
-| `K` | Hover docs |
+| `grr` | Find all references (Telescope, includes current line) |
+| `gra` | Code action |
+| `gri` | Go to implementation |
+| `grt` | Go to type definition |
+| `grn` | Rename symbol |
+| `gO` | Document symbols |
+| `K` | Hover docs (built-in, attached automatically) |
 | `⎵ rn` | Rename symbol |
 | `⎵ ca` | Code action |
+| `D` | Diagnostics float |
 
 ### Navigation
 
@@ -30,13 +42,15 @@ lightx0x · gruvbox-material dark · Sept 5, 2026
 | Key | Action |
 |-----|--------|
 | `⎵ a` | Add file to list |
-| `⎵ r` | Remove file from list |
 | `Ctrl e` | Quick menu |
 | `⎵ fl` | Open in Telescope |
 | `Ctrl p` | Previous file |
 | `Ctrl n` | Next file |
 
-### Folding *(new)*
+To remove a file from the list, open the quick menu with `Ctrl e`, delete the
+line with `dd`, and write with `:w`.
+
+### Folding
 
 | Key | Action |
 |-----|--------|
@@ -48,26 +62,38 @@ lightx0x · gruvbox-material dark · Sept 5, 2026
 | `zo` | Open fold under cursor |
 | `zc` | Close fold under cursor |
 
-### Todo Comments *(new)*
+### Todo Comments
 
 | Key | Action |
 |-----|--------|
 | `]t` | Next todo comment |
 | `[t` | Previous todo comment |
 
-### Yazi *(new)*
+### Yazi
 
 | Key | Action |
 |-----|--------|
 | `⎵ yz` | Open yazi at current file |
 | `⎵ yw` | Open yazi in working directory |
 
-### Search & Replace *(new)*
+### Search & Replace
 
 | Key | Action |
 |-----|--------|
 | `⎵ sr` | Open search and replace |
 | `⎵ sw` | Search and replace current word |
+
+Inside the grug-far results buffer, to replace individual matches rather than
+all of them at once:
+
+| Key | Action |
+|-----|--------|
+| `⎵ r` | Replace all matches |
+| `⎵ j` | Apply the match under the cursor, then move to the next |
+| `⎵ k` | Apply the match under the cursor, then move to the previous |
+| `⎵ l` | Sync the current line (after editing it by hand) |
+| `⎵ s` | Sync all lines — `dd` the ones to skip first |
+| `g?` | Show every available action |
 
 ### Editing
 
@@ -77,7 +103,6 @@ lightx0x · gruvbox-material dark · Sept 5, 2026
 | `Enter` | New line below cursor |
 | `Alt Enter` | New line above cursor |
 | `Ctrl h` | Select entire buffer |
-| `D` | Diagnostics float |
 
 ### Terminal & Misc
 
@@ -85,6 +110,7 @@ lightx0x · gruvbox-material dark · Sept 5, 2026
 |-----|--------|
 | `⎵ ft` | Toggle floating terminal |
 | `Ctrl x` (term) | Close floating terminal |
+| `⎵ lg` | Open lazygit |
 | `⎵ x` | Make file executable |
 | `⎵ ux` | Remove executable flag |
 | `jj` / `jk` (insert) | Exit insert mode |
@@ -102,6 +128,28 @@ gruvbox-material dark hard with custom highlight overrides
 | fg | `#d4be98` | variables, fields, constants, punctuation |
 | grey | `#928374` | comments (italic) |
 
+These are Treesitter capture groups, so they only apply where a parser is
+installed and highlighting has been started — see below.
+
+## Treesitter
+
+On the `main` branch, parsers are installed explicitly and highlighting is
+started by a `FileType` autocmd; neither happens on its own.
+
+Currently covered: `lua`, `rust`, `typescript`, `typescriptreact`,
+`javascript`, `javascriptreact`.
+
+To add a language, install the parser and add the filetype to the autocmd
+pattern in `lua/plugins/treesitter.lua`:
+
+```bash
+nvim --headless -c 'lua require("nvim-treesitter").install({ "python" }):wait(540000)' -c 'qa!'
+```
+
+`install()` is async, so the `:wait()` matters — without it the editor quits
+before the download finishes. To refresh parsers after a plugin update, use
+`update()` in place of `install()`.
+
 ## Plugins
 
 | Plugin | Purpose |
@@ -118,20 +166,40 @@ gruvbox-material dark hard with custom highlight overrides
 | nvim-autopairs | Auto close brackets |
 | alpha-nvim | Dashboard |
 | lazygit | Git UI |
-| gitsigns *(new)* | Git change markers in gutter |
-| todo-comments *(new)* | Highlight TODO/FIXME/HACK comments |
-| yazi *(new)* | Terminal file manager |
-| grug-far *(new)* | Repo-wide search and replace |
+| gitsigns | Git change markers in gutter |
+| todo-comments | Highlight TODO/FIXME/HACK comments |
+| yazi | Terminal file manager |
+| grug-far | Repo-wide search and replace |
 
 ## Automatic Behaviors
 
 | Feature | Description |
 |---------|-------------|
 | Format on save | LSP-based, all attached clients |
+| Treesitter highlighting | Started per filetype; falls back to regex syntax elsewhere |
 | Yank highlight | Brief flash on copied text |
 | No auto-comment | New lines don't continue comment leaders |
 | TS/TSX/CSS indent | 2-space tabs for web files |
-| Treesitter folding *(new)* | Expression-based folds, open by default |
+| Treesitter folding | Expression-based folds, open by default |
 | Transparent background | Normal and NormalFloat cleared |
 | Dynamic Node path | Auto-detects latest nvm version |
-| Git signs in gutter *(new)* | +/~/_ markers for added, changed, deleted lines |
+| Git signs in gutter | +/~/_ markers for added, changed, deleted lines |
+
+## Commit Convention
+
+This repo uses [Conventional Commits](https://www.conventionalcommits.org):
+
+```
+<type>(<optional scope>): <description>
+```
+
+| Type | Use for |
+|------|---------|
+| `feat` | A new capability |
+| `fix` | A bug fix |
+| `docs` | Documentation only |
+| `refactor` | Restructuring with no behavior change |
+| `chore` | Maintenance, lockfile bumps |
+
+Scopes match the config layout — `lsp`, `keybinds`, `colors`, `treesitter`,
+`options`, `flterm`, `none-ls`.
