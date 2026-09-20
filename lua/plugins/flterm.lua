@@ -63,16 +63,6 @@ return {
 			vim.keymap.set("t", "<C-x>", "<C-\\><C-n>:close!<CR>", {
 				noremap = true,
 				silent = true,
-				-- Apply to the buffer once it's created
-				callback = function()
-					if vim.api.nvim_buf_is_valid(state.floating.buf) then
-						vim.keymap.set("t", "<C-x>", "<C-\\><C-n>:close!<CR>", {
-							noremap = true,
-							silent = true,
-							buffer = state.floating.buf,
-						})
-					end
-				end,
 			})
 		end,
 	},
