@@ -53,6 +53,20 @@ return {
 			})
 			vim.lsp.enable({ "ts_ls", "lua_ls", "rust_analyzer" })
 			vim.lsp.inlay_hint.enable(true)
+			-- Servers still indexing (rust-analyzer especially) reject hint requests with
+			-- ContentModified; Neovim drops those and waits for the next edit. Retry instead.
+			local on_inlayhint = vim.lsp.handlers["textDocument/inlayHint"]
+			vim.lsp.handlers["textDocument/inlayHint"] = function(err, result, ctx)
+				if err and err.code == vim.lsp.protocol.ErrorCodes.ContentModified then
+					vim.defer_fn(function()
+						if vim.lsp.get_client_by_id(ctx.client_id) then
+							vim.lsp.handlers["workspace/inlayHint/refresh"](nil, nil, ctx)
+						end
+					end, 500)
+					return
+				end
+				return on_inlayhint(err, result, ctx)
+			end
 			vim.keymap.set("n", "<leader>ih", function()
 				vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
 			end, { desc = "Toggle inlay hints" })
