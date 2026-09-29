@@ -69,6 +69,13 @@ line with `dd`, and write with `:w`.
 | `<leader>t` | Next todo comment (wraps around the buffer) |
 | `[t` | Previous todo comment |
 
+### Directory Navigation
+
+| Key | Action |
+|-----|--------|
+| `<leader>n` | Next file in current file's directory (wraps) |
+| `<leader>p` | Previous file in current file's directory (wraps) |
+
 ### Yazi
 
 | Key | Action |

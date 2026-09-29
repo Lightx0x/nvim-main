@@ -56,3 +56,40 @@ end, { desc = "Next todo comment (wraps)" })
 vim.keymap.set("n", "[t", function()
 	require("todo-comments").jump_prev()
 end, { desc = "Previous todo comment" })
+-- Sibling files: open the next/previous file in the current file's directory (wraps)
+local function sibling_file(step)
+	local path = vim.api.nvim_buf_get_name(0)
+	if path == "" then
+		return vim.notify("Buffer has no file", vim.log.levels.WARN)
+	end
+	local dir, name = vim.fs.dirname(path), vim.fs.basename(path)
+	local files = {}
+	for entry, type in vim.fs.dir(dir) do
+		if type == "file" then
+			table.insert(files, entry)
+		end
+	end
+	table.sort(files)
+	local idx = 0
+	for i, f in ipairs(files) do
+		if f == name then
+			idx = i
+			break
+		end
+	end
+	if #files == 0 or (#files == 1 and idx == 1) then
+		return vim.notify("No other files in directory", vim.log.levels.WARN)
+	end
+	-- if the current file isn't in the list, <leader>p should land on the last file
+	if idx == 0 and step < 0 then
+		idx = #files + 1
+	end
+	local next_idx = (idx - 1 + step) % #files + 1
+	vim.cmd.edit(vim.fn.fnameescape(vim.fs.joinpath(dir, files[next_idx])))
+end
+vim.keymap.set("n", "<leader>n", function()
+	sibling_file(1)
+end, { desc = "Next file in directory" })
+vim.keymap.set("n", "<leader>p", function()
+	sibling_file(-1)
+end, { desc = "Previous file in directory" })
