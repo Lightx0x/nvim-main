@@ -66,7 +66,7 @@ line with `dd`, and write with `:w`.
 
 | Key | Action |
 |-----|--------|
-| `]t` | Next todo comment |
+| `<leader>t` | Next todo comment (wraps around the buffer) |
 | `[t` | Previous todo comment |
 
 ### Yazi
