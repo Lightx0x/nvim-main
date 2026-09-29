@@ -36,7 +36,26 @@ return {
 					end,
 				},
 			})
+			-- Inlay hints: rust_analyzer sends them by default, lua_ls and ts_ls need opting in
+			vim.lsp.config("lua_ls", {
+				settings = { Lua = { hint = { enable = true } } },
+			})
+			local ts_hints = {
+				includeInlayParameterNameHints = "literals",
+				includeInlayVariableTypeHints = true,
+				includeInlayFunctionLikeReturnTypeHints = true,
+			}
+			vim.lsp.config("ts_ls", {
+				settings = {
+					typescript = { inlayHints = ts_hints },
+					javascript = { inlayHints = ts_hints },
+				},
+			})
 			vim.lsp.enable({ "ts_ls", "lua_ls", "rust_analyzer" })
+			vim.lsp.inlay_hint.enable(true)
+			vim.keymap.set("n", "<leader>ih", function()
+				vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
+			end, { desc = "Toggle inlay hints" })
 
 			vim.diagnostic.config({
 				virtual_text = {

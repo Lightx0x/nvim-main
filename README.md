@@ -26,6 +26,7 @@ than duplicated under the leader key, except where a nicer UI is worth it —
 | `⎵ rn` | Rename symbol |
 | `⎵ ca` | Code action |
 | `D` | Diagnostics float |
+| `⎵ ih` | Toggle inlay hints (types / parameter names, on by default) |
 
 ### Navigation
 
