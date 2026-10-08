@@ -26,8 +26,39 @@ return {
 			},
 		},
 		config = function()
+			-- Anchor's macros (#[program], #[derive(Accounts)], ...) emit code gated on Anchor's own
+			-- feature flags, spanned onto user code, so it lights up with inactive-code hints. Drop those.
+			local anchor_features = {
+				"anchor-debug", "cpi", "no-entrypoint", "no-idl", "no-log-ix-name",
+				"idl-build", "custom-heap", "custom-panic", "event-cpi",
+			}
+			local function drop_anchor_inactive(diagnostics)
+				return vim.tbl_filter(function(d)
+					if d.code ~= "inactive-code" and d.code ~= "inactive_code" then
+						return true
+					end
+					for _, f in ipairs(anchor_features) do
+						if d.message:find('"' .. f .. '"', 1, true) then
+							return false
+						end
+					end
+					return true
+				end, diagnostics or {})
+			end
 			vim.lsp.config("rust_analyzer", {
 				handlers = {
+					["textDocument/publishDiagnostics"] = function(err, result, ctx)
+						if result then
+							result.diagnostics = drop_anchor_inactive(result.diagnostics)
+						end
+						return vim.lsp.handlers["textDocument/publishDiagnostics"](err, result, ctx)
+					end,
+					["textDocument/diagnostic"] = function(err, result, ctx)
+						if result and result.items then
+							result.items = drop_anchor_inactive(result.items)
+						end
+						return vim.lsp.handlers["textDocument/diagnostic"](err, result, ctx)
+					end,
 					["window/showMessage"] = function(_, result, ctx)
 						if result and result.message and result.message:match("panicked") then
 							return
