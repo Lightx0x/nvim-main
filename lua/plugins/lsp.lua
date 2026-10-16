@@ -2,14 +2,13 @@ return {
 	{
 		"williamboman/mason.nvim",
 		lazy = false,
-		config = function()
-			require("mason").setup()
-		end,
+		opts = {},
 	},
 	{
 		"williamboman/mason-lspconfig.nvim",
 		lazy = false,
-		opts = {},
+		-- servers are enabled explicitly via vim.lsp.enable below
+		opts = { automatic_enable = false },
 	},
 	{
 		"neovim/nvim-lspconfig",
