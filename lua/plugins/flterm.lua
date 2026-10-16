@@ -37,7 +37,7 @@ return {
 
 				-- Start terminal if not already done
 				if vim.bo[state.floating.buf].buftype ~= "terminal" then
-					vim.fn.termopen(vim.o.shell)
+					vim.fn.jobstart(vim.o.shell, { term = true })
 				end
 
 				-- Always enter insert mode when opening the floating terminal
@@ -59,7 +59,7 @@ return {
 
 			vim.api.nvim_create_user_command("Flterm", toggle_floating_terminal, {})
 
-			-- Exit terminal mode with <C-t>
+			-- Hide the terminal with <C-x>
 			vim.keymap.set("t", "<C-x>", "<C-\\><C-n>:close!<CR>", {
 				noremap = true,
 				silent = true,
