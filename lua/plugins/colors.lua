@@ -1,5 +1,5 @@
+-- gruvbox_material_transparent_background already clears Normal; floats need it too
 local function enable_transparency()
-	vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
 	vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
 end
 
@@ -27,10 +27,6 @@ local function reduce_colors()
 	hl(0, "@keyword.return", { fg = yellow })
 	hl(0, "@keyword.function", { fg = yellow })
 	hl(0, "@keyword.operator", { fg = yellow })
-	hl(0, "@conditional", { fg = yellow })
-	hl(0, "@repeat", { fg = yellow })
-	hl(0, "@exception", { fg = yellow })
-	hl(0, "@include", { fg = yellow })
 	hl(0, "@operator", { fg = yellow })
 
 	-- Strings — green
@@ -46,14 +42,11 @@ local function reduce_colors()
 	hl(0, "@type.builtin", { fg = yellow })
 	hl(0, "@constructor", { fg = yellow })
 
-	-- Functions, methods, module paths — warm sand
+	-- Functions, methods, module paths — grey
 	hl(0, "Function", { fg = slate })
 	hl(0, "@function", { fg = slate })
 	hl(0, "@function.call", { fg = slate })
-	hl(0, "@method", { fg = slate })
-	hl(0, "@method.call", { fg = slate })
 	hl(0, "@module", { fg = slate })
-	hl(0, "@namespace", { fg = slate })
 
 	-- Everything else — foreground
 	hl(0, "Identifier", { fg = fg })
@@ -66,8 +59,6 @@ local function reduce_colors()
 	hl(0, "PreProc", { fg = fg })
 	hl(0, "@variable", { fg = fg })
 	hl(0, "@property", { fg = fg })
-	hl(0, "@field", { fg = fg })
-	hl(0, "@parameter", { fg = fg })
 	hl(0, "@constant", { fg = fg })
 	hl(0, "@constant.builtin", { fg = fg })
 	hl(0, "@number", { fg = fg })
