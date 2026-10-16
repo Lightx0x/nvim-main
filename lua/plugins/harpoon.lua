@@ -1,9 +1,8 @@
-local conf = require("telescope.config").values
-local themes = require("telescope.themes")
-
 -- helper function to use telescope on harpoon list.
 -- change get_ivy to other themes if wanted
 local function toggle_telescope(harpoon_files)
+	local conf = require("telescope.config").values
+	local themes = require("telescope.themes")
 	local file_paths = {}
 	for _, item in ipairs(harpoon_files.items) do
 		table.insert(file_paths, item.value)
