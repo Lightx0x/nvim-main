@@ -23,19 +23,24 @@ vim.api.nvim_create_autocmd("FileType", {
 	end,
 })
 
-vim.api.nvim_create_autocmd("LspAttach", {
+-- Format once per save. When none-ls is attached its formatter (prettier, stylua, ...)
+-- is the one we want, so skip the language server's own formatter.
+vim.api.nvim_create_autocmd("BufWritePre", {
 	desc = "Format on save via LSP",
 	group = vim.api.nvim_create_augroup("lsp-format-on-save", { clear = true }),
 	callback = function(args)
-		local client = vim.lsp.get_client_by_id(args.data.client_id)
-		if not client:supports_method("textDocument/formatting") then
+		local clients = vim.lsp.get_clients({ bufnr = args.buf, method = "textDocument/formatting" })
+		if #clients == 0 then
 			return
 		end
-		vim.api.nvim_create_autocmd("BufWritePre", {
-			group = "lsp-format-on-save",
-			buffer = args.buf,
-			callback = function()
-				vim.lsp.buf.format({ bufnr = args.buf, id = client.id, timeout_ms = 2000 })
+		local use_null_ls = vim.iter(clients):any(function(c)
+			return c.name == "null-ls"
+		end)
+		vim.lsp.buf.format({
+			bufnr = args.buf,
+			timeout_ms = 2000,
+			filter = function(c)
+				return not use_null_ls or c.name == "null-ls"
 			end,
 		})
 	end,
