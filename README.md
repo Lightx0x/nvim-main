@@ -77,13 +77,6 @@ line with `dd`, and write with `:w`.
 | `<leader>n` | Next file in current file's directory (wraps) |
 | `<leader>p` | Previous file in current file's directory (wraps) |
 
-### Yazi
-
-| Key | Action |
-|-----|--------|
-| `⎵ yz` | Open yazi at current file |
-| `⎵ yw` | Open yazi in working directory |
-
 ### Search & Replace
 
 | Key | Action |
@@ -102,6 +95,17 @@ all of them at once:
 | `⎵ l` | Sync the current line (after editing it by hand) |
 | `⎵ s` | Sync all lines — `dd` the ones to skip first |
 | `g?` | Show every available action |
+
+### Git Hunks
+
+| Key | Action |
+|-----|--------|
+| `⎵ hn` | Next hunk |
+| `⎵ hp` | Previous hunk |
+| `⎵ hs` | Stage/unstage hunk (visual: stage selected lines) |
+| `⎵ hS` | Stage buffer |
+| `⎵ hv` | Preview hunk |
+| `⎵ hr` | Reset hunk (discard changes) |
 
 ### Editing
 
@@ -176,7 +180,6 @@ before the download finishes. To refresh parsers after a plugin update, use
 | lazygit | Git UI |
 | gitsigns | Git change markers in gutter |
 | todo-comments | Highlight TODO/FIXME/HACK comments |
-| yazi | Terminal file manager |
 | grug-far | Repo-wide search and replace |
 
 ## Automatic Behaviors
